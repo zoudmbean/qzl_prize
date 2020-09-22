@@ -1,0 +1,70 @@
+表字段分析：
+
+1. 用户表（T_User）：id  微信ID  真实姓名  手机号  注册时间  用户类型（是否VIP） 
+
+2. 奖品管理表（T_prize）：id  奖品名称  奖品图片  中奖显示描述语句  奖品描述（一等奖：华为手机一部  二等奖 小米手机一部。。。）  奖品级别（1 2 3 4 5 6 7 8）  奖
+
+品上传时间
+
+3. VIP表（T_UVIP）：id user_id  VIP时间   VIP金额  VIP总充值金额  是否中过特（1 2 3）奖  中奖时间  
+
+4. 活动表（T_EVENT）：id 活动名称  活动开始时间  活动结束时间  活动创建时间
+
+5. 中奖表（T_TICKET）：id user_id 奖品_id  兑奖码 中奖时间
+
+分批建表
+
+用户表：
+CREATE TABLE `t_user`(  
+  `u_id` INT(11) NOT NULL AUTO_INCREMENT COMMENT '用户id',
+  `v_id` VARCHAR(50) NOT NULL COMMENT '用户微信id',
+  `u_name` VARCHAR(100) NOT NULL COMMENT '用户名称',
+  `u_phone` VARCHAR(20) NOT NULL COMMENT '用户手机号',
+  `regist_time` DATE NOT NULL COMMENT '用户注册时间',
+  `u_type` INT(2) NOT NULL COMMENT '用户类型（0：普通用户，1VIP用户）',
+   PRIMARY KEY(`u_id`)
+) CHARSET=utf8;
+
+奖品管理表：
+CREATE TABLE `t_prize` (
+  `p_id` INT (11) NOT NULL AUTO_INCREMENT COMMENT '奖品id',
+  `p_name` VARCHAR (100) NOT NULL COMMENT '奖品名称',
+  `p_image` VARCHAR (100) COMMENT '奖品图片',
+  `p_after_description` VARCHAR (300) COMMENT '中奖显示描述语句',
+  `p_description` VARCHAR (200) COMMENT '例如：一等奖：华为手机一部  二等奖 小米手机一部。。。',
+  `p_type` INT (11) COMMENT '奖品级别（1 2 3 4 5 6 7 8）',
+  `p_date` DATE COMMENT '奖品上传时间',
+  PRIMARY KEY (`p_id`)
+) CHARSET = utf8 ;
+
+VIP表：
+CREATE TABLE `t_vip` (
+  `id` INT (11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '主键id',
+  `user_id` INT (11) NOT NULL COMMENT '用户ID',
+  `create_time` DATE COMMENT 'VIP时间',
+  `money` DECIMAL (8) COMMENT 'VIP金额',
+  `total_money` DECIMAL (8) COMMENT 'VIP总充值金额',
+  `if_price` INT (1) COMMENT '是否中过特（1 2 3）奖',
+  `price_time` DATE COMMENT '中奖时间',
+  PRIMARY KEY (`id`)
+) CHARSET = utf8 ;
+
+活动表：
+CREATE TABLE `t_event` (
+  `id` INT (11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '主键id',
+  `a_name` VARCHAR(300) NOT NULL COMMENT '活动名称',
+  `start_time` DATE COMMENT '活动开始时间',
+  `end_time` DATE COMMENT '活动结束时间',
+  `create_time` DATE COMMENT '活动创建时间',
+  PRIMARY KEY (`id`)
+) CHARSET = utf8 ;
+
+中奖表：
+CREATE TABLE `t_ticket` (
+  `id` INT (11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '主键id',
+  `user_id` INT (11) NOT NULL COMMENT '中奖用户id',
+  `p_id` INT (11) COMMENT '中奖奖品id',
+  `code` VARCHAR(20) COMMENT '兑奖码',
+  `p_time` DATE COMMENT '中奖时间',
+  PRIMARY KEY (`id`)
+) CHARSET = utf8 ;

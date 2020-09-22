@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qzl.mapper.PriceMapper" >
+  <resultMap id="BaseResultMap" type="com.qzl.pojo.Price" >
+    <result column="p_id" property="pId" jdbcType="INTEGER" />
+    <result column="p_name" property="pName" jdbcType="VARCHAR" />
+    <result column="p_image" property="pImage" jdbcType="VARCHAR" />
+    <result column="p_after_description" property="pAfterDescription" jdbcType="VARCHAR" />
+    <result column="p_description" property="pDescription" jdbcType="VARCHAR" />
+    <result column="p_type" property="pType" jdbcType="INTEGER" />
+    <result column="p_date" property="pDate" jdbcType="DATE" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    p_id, p_name, p_image, p_after_description, p_description, p_type, p_date
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.qzl.pojo.PriceExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_prize
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.qzl.pojo.PriceExample" >
+    delete from t_prize
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.qzl.pojo.Price" >
+    insert into t_prize (p_id, p_name, p_image, 
+      p_after_description, p_description, p_type, 
+      p_date)
+    values (#{pId,jdbcType=INTEGER}, #{pName,jdbcType=VARCHAR}, #{pImage,jdbcType=VARCHAR}, 
+      #{pAfterDescription,jdbcType=VARCHAR}, #{pDescription,jdbcType=VARCHAR}, #{pType,jdbcType=INTEGER}, 
+      #{pDate,jdbcType=DATE})
+  </insert>
+  <insert id="insertSelective" parameterType="com.qzl.pojo.Price" >
+    insert into t_prize
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pId != null" >
+        p_id,
+      </if>
+      <if test="pName != null" >
+        p_name,
+      </if>
+      <if test="pImage != null" >
+        p_image,
+      </if>
+      <if test="pAfterDescription != null" >
+        p_after_description,
+      </if>
+      <if test="pDescription != null" >
+        p_description,
+      </if>
+      <if test="pType != null" >
+        p_type,
+      </if>
+      <if test="pDate != null" >
+        p_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pId != null" >
+        #{pId,jdbcType=INTEGER},
+      </if>
+      <if test="pName != null" >
+        #{pName,jdbcType=VARCHAR},
+      </if>
+      <if test="pImage != null" >
+        #{pImage,jdbcType=VARCHAR},
+      </if>
+      <if test="pAfterDescription != null" >
+        #{pAfterDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="pDescription != null" >
+        #{pDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="pType != null" >
+        #{pType,jdbcType=INTEGER},
+      </if>
+      <if test="pDate != null" >
+        #{pDate,jdbcType=DATE},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.qzl.pojo.PriceExample" resultType="java.lang.Integer" >
+    select count(*) from t_prize
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update t_prize
+    <set >
+      <if test="record.pId != null" >
+        p_id = #{record.pId,jdbcType=INTEGER},
+      </if>
+      <if test="record.pName != null" >
+        p_name = #{record.pName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pImage != null" >
+        p_image = #{record.pImage,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pAfterDescription != null" >
+        p_after_description = #{record.pAfterDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pDescription != null" >
+        p_description = #{record.pDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pType != null" >
+        p_type = #{record.pType,jdbcType=INTEGER},
+      </if>
+      <if test="record.pDate != null" >
+        p_date = #{record.pDate,jdbcType=DATE},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update t_prize
+    set p_id = #{record.pId,jdbcType=INTEGER},
+      p_name = #{record.pName,jdbcType=VARCHAR},
+      p_image = #{record.pImage,jdbcType=VARCHAR},
+      p_after_description = #{record.pAfterDescription,jdbcType=VARCHAR},
+      p_description = #{record.pDescription,jdbcType=VARCHAR},
+      p_type = #{record.pType,jdbcType=INTEGER},
+      p_date = #{record.pDate,jdbcType=DATE}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>
